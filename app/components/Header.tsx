@@ -230,7 +230,7 @@ export default function Header() {
     <header className="relative sticky top-0 z-10 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-6 py-6 grid grid-cols-3 items-center">
         <div className="flex items-center gap-3">
-          <span className="font-semibold font-bold text-xl">Your Next Store</span>
+          <a href="/" className="font-semibold font-bold text-xl">Your Next Store</a>
         </div>
 
         <nav className="hidden md:flex justify-center gap-4 items-center text-sm text-slate-700">
