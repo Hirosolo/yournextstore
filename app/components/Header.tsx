@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import MegaPopup from "./MegaPopup";
 
 const BRANDS: { title: string; items: string[] }[] = [
   {
@@ -157,10 +158,68 @@ const BRANDS: { title: string; items: string[] }[] = [
   { title: "Video Game", items: ["Fallout", "Sonic The Hedgehog", "World of Warcraft", "Zelda"] },
 ];
 
+const CATEGORIES: string[] = [
+  "Accessories",
+  "Clothing",
+  "Footwear",
+  "Home Decor",
+  "Sale",
+];
+
 export default function Header() {
   const [q, setQ] = useState("");
   const [catOpen, setCatOpen] = useState(false);
   const [brandsOpen, setBrandsOpen] = useState(false);
+  const brandsCloseTimeout = useRef<number | null>(null);
+  const catCloseTimeout = useRef<number | null>(null);
+
+  function clearBrandsCloseTimeout() {
+    if (brandsCloseTimeout.current) {
+      clearTimeout(brandsCloseTimeout.current);
+      brandsCloseTimeout.current = null;
+    }
+  }
+
+  function clearCatCloseTimeout() {
+    if (catCloseTimeout.current) {
+      clearTimeout(catCloseTimeout.current);
+      catCloseTimeout.current = null;
+    }
+  }
+
+  function openBrands() {
+    clearBrandsCloseTimeout();
+    setBrandsOpen(true);
+  }
+
+  function openCategories() {
+    clearCatCloseTimeout();
+    setCatOpen(true);
+  }
+
+  function scheduleCloseBrands(delay = 150) {
+    clearBrandsCloseTimeout();
+    // window.setTimeout returns a number in browser
+    brandsCloseTimeout.current = window.setTimeout(() => {
+      setBrandsOpen(false);
+      brandsCloseTimeout.current = null;
+    }, delay) as unknown as number;
+  }
+
+  function scheduleCloseCategories(delay = 150) {
+    clearCatCloseTimeout();
+    catCloseTimeout.current = window.setTimeout(() => {
+      setCatOpen(false);
+      catCloseTimeout.current = null;
+    }, delay) as unknown as number;
+  }
+
+  useEffect(() => {
+    return () => {
+      clearBrandsCloseTimeout();
+      clearCatCloseTimeout();
+    };
+  }, []);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -180,8 +239,8 @@ export default function Header() {
             <a
               className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"
               href="#category"
-              onMouseEnter={() => { setCatOpen(true); setBrandsOpen(false); }}
-              onMouseLeave={() => setCatOpen(false)}
+              onMouseEnter={() => { openCategories(); setBrandsOpen(false); }}
+              onMouseLeave={() => scheduleCloseCategories()}
             >
               Category
             </a>
@@ -191,8 +250,8 @@ export default function Header() {
             <a
               className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"
               href="#brands"
-              onMouseEnter={() => { setBrandsOpen(true); setCatOpen(false); }}
-              onMouseLeave={() => setBrandsOpen(false)}
+              onMouseEnter={() => { openBrands(); setCatOpen(false); }}
+              onMouseLeave={() => scheduleCloseBrands()}
             >
               Brands
             </a>
@@ -222,57 +281,20 @@ export default function Header() {
           </form>
         </div>
       </div>
-        {/* Full-width category popup (positioned relative to header) */}
-        <div
-          className={`absolute left-0 right-0 top-full bg-white border-t border-slate-100 shadow-md z-50 transition-all duration-150 ${catOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
-          onMouseEnter={() => setCatOpen(true)}
-          onMouseLeave={() => setCatOpen(false)}
-        >
-          <div className="mx-auto max-w-7xl px-6 py-4 text-sm text-slate-700">
-            <div className="mb-2">
-              <span className="font-semibold">ALL CATEGORIES</span>
-            </div>
-
-            <div className="grid grid-cols-1 gap-2">
-              <a className="block hover:underline" href="#accessories">Accessories</a>
-              <a className="block hover:underline" href="#clothing">Clothing</a>
-              <a className="block hover:underline" href="#footwear">Footwear</a>
-              <a className="block hover:underline" href="#homedecor">Home Decor</a>
-              <a className="block hover:underline" href="#sale">Sale</a>
-            </div>
-
-            <div className="mt-3">
-              <a href="/categories" className="inline-block font-semibold text-sm hover:underline">View all Categories</a>
-            </div>
-          </div>
-        </div>
-        {/* Full-width brands popup (grouped) */}
-        <div
-          className={`absolute left-0 right-0 top-full bg-white border-t border-slate-100 shadow-md z-50 transition-all duration-150 ${brandsOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
-          onMouseEnter={() => setBrandsOpen(true)}
-          onMouseLeave={() => setBrandsOpen(false)}
-        >
-          <div className="mx-auto max-w-7xl px-6 py-6 text-sm text-slate-700">
-            {/* brands header removed; group titles are shown below */}
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {BRANDS.map((group) => (
-                <div key={group.title}>
-                  <div className="font-semibold text-md mb-1">{group.title}</div>
-                  <ul className="space-y-1 text-sm">
-                    {group.items.map((it) => (
-                      <li key={it}>{it}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-4">
-              <a href="/brands" className="inline-block font-semibold text-sm hover:underline">View all Brands</a>
-            </div>
-          </div>
-        </div>
+        <MegaPopup
+          open={catOpen}
+          onMouseEnter={() => openCategories()}
+          onMouseLeave={() => scheduleCloseCategories()}
+          groups={[{ title: "ALL CATEGORIES", items: CATEGORIES }]}
+          viewAllPath="/categories"
+        />
+        <MegaPopup
+          open={brandsOpen}
+          onMouseEnter={() => openBrands()}
+          onMouseLeave={() => scheduleCloseBrands()}
+          groups={BRANDS.map((g) => ({ title: g.title, items: g.items }))}
+          viewAllPath="/brands"
+        />
     </header>
   );
 }
