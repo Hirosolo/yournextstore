@@ -1,11 +1,11 @@
 export default function PageFooter() {
   return (
-    <footer id="about" className="mt-20 border-t pt-8 text-sm text-slate-600">
+    <footer id="about" className="mt-20 border-t border-slate-200 pt-8 text-sm text-slate-500">
       <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
         <div>© {new Date().getFullYear()} YourNextStore — Built with care.</div>
         <div className="flex gap-4">
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
+          <a href="#" className="hover:text-slate-900">Terms</a>
+          <a href="#" className="hover:text-slate-900">Privacy</a>
         </div>
       </div>
     </footer>

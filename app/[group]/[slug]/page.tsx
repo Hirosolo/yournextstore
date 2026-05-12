@@ -13,12 +13,22 @@ export default async function Page({ params }: Props) {
   const { group, slug } = await params;
   const breadcrumb = `${group.toUpperCase()} / ${slug.toUpperCase()}`;
 
-  const sampleProducts = Array.from({ length: 9 }).map((_, i) => ({
-    id: i + 1,
-    title: `${slug.replace(/[-_]/g, " ")} Product ${i + 1}`,
-    price: "$29.99",
-    img: "/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785433426165473547536d4e57625668366255527366475a735833526c63335266546a597a636b645a61474a7a5a6c566c57466c6f62324578656d51775155683.avif",
-  }));
+  const sampleProducts = Array.from({ length: 9 }).map((_, i) => {
+    // Example: show sale price and original price for some products
+    const original = i % 3 === 0 ? "$44.00" : undefined;
+    const price = original ? "$35.95" : "$29.99";
+    const reviews = ((i + 3) * 7) % 20 + 1; // deterministic 1-20 reviews
+
+    return {
+      id: i + 1,
+      title: `${slug.replace(/[-_]/g, " ")} Product ${i + 1}`,
+      price,
+      originalPrice: original,
+      reviews,
+      img: "/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785433426165473547536d4e57625668366255527366475a735833526c63335266546a597a636b645a61474a7a5a6c566c57466c6f62324578656d51775155683.avif",
+      images: undefined,
+    };
+  });
 
   return (
     <div className=" bg-white text-[#0f172a] min-h-screen">

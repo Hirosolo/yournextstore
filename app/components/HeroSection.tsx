@@ -31,8 +31,8 @@ export default function HeroSection() {
 
   return (
     <section className="mt-8">
-      <div className="rounded-xl bg-neutral-50 p-6 shadow-sm">
-        <div className="relative aspect-[16/7] overflow-hidden rounded-lg">
+      <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 shadow-[0_28px_70px_-40px_rgba(15,23,42,0.18)] md:p-6">
+        <div className="relative aspect-[16/7] overflow-hidden rounded-[1.5rem]">
           {BANNERS.map((banner, index) => (
             <Image
               key={banner.src}
@@ -45,19 +45,26 @@ export default function HeroSection() {
             />
           ))}
 
-          <div className="absolute inset-0 bg-gradient-to-r from-white/85 via-white/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-white/10" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.18),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.16),transparent_30%)]" />
 
-          <div className="absolute left-6 top-1/2 max-w-2xl -translate-y-1/2 text-left md:left-16">
-            <div className="rounded-md p-6">
-              <h1 className="text-4xl font-extrabold leading-tight text-slate-900 md:text-6xl">
+          <div className="absolute left-5 top-1/2 max-w-2xl -translate-y-1/2 text-left md:left-10">
+            <div className="max-w-xl rounded-3xl border border-white/70 bg-white/85 p-5 backdrop-blur-md md:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-sky-700">
+                Curated storefront
+              </p>
+              <h1 className="mt-4 text-4xl font-extrabold leading-tight text-slate-900 md:text-6xl">
                 Launch your store
                 <br />
-                in minutes.
+                with bright clarity.
               </h1>
-              <p className="mt-4 text-lg text-slate-600">Stripe-native. Built for the agentic future.</p>
-              <div className="mt-6">
-                <a href="#products" className="inline-block rounded-full bg-slate-900 px-6 py-3 text-white">
-                  Try it today
+              <p className="mt-4 max-w-lg text-lg text-slate-600">Stripe-native commerce, richer storytelling, and a layout that feels complete without becoming crowded.</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a href="#products" className="inline-block rounded-full bg-slate-900 px-6 py-3 font-semibold text-white transition hover:bg-slate-800">
+                  Explore products
+                </a>
+                <a href="#about" className="inline-block rounded-full border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-900 transition hover:bg-slate-50">
+                  See the story
                 </a>
               </div>
             </div>

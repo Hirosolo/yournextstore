@@ -10,21 +10,23 @@ type HeartButtonProps = {
 const STORAGE_KEY = "favorite-products";
 
 export function HeartButton({ productId }: HeartButtonProps) {
-  const [isFavorite, setIsFavorite] = useState(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
+  const [isFavorite, setIsFavorite] = useState(false);
 
+  // Populate `isFavorite` on mount to avoid differing server/client markup
+  useEffect(() => {
     try {
       const savedFavorites = JSON.parse(
         window.localStorage.getItem(STORAGE_KEY) ?? "[]"
       ) as string[];
 
-      return savedFavorites.includes(productId);
+      if (savedFavorites.includes(productId)) {
+        // Defer state update to avoid synchronous setState inside effect
+        window.setTimeout(() => setIsFavorite(true), 0);
+      }
     } catch {
-      return false;
+      // ignore
     }
-  });
+  }, [productId]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [sparks, setSparks] = useState<Array<{ id: number; angle: number }>>([]);
   const animationTimeoutRef = useRef<number | null>(null);
