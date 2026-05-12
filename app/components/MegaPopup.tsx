@@ -29,11 +29,11 @@ export default function MegaPopup({
 
   return (
     <div
-      className={`absolute left-0 right-0 top-full bg-white border-t border-slate-100 shadow-md z-50 transition-all duration-150 ${open ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
+      className={`absolute left-0 right-0 top-full bg-white border-t border-slate-100 shadow-md z-50 max-h-[60vh] overflow-y-auto transition-all duration-150 ${open ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="mx-auto max-w-7xl px-6 py-6 text-sm text-slate-700 max-h-[60vh] overflow-y-auto">
+      <div className="mx-auto max-w-7xl px-6 py-6 text-sm text-slate-700">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {groups.map((group) => (
             <div key={group.title || group.items[0]}>
