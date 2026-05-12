@@ -3,6 +3,160 @@
 import Image from "next/image";
 import { useState } from "react";
 
+const BRANDS: { title: string; items: string[] }[] = [
+  {
+    title: "Business",
+    items: [
+      "Budweiser",
+      "Chevrolet",
+      "Coca-Cola",
+      "Ducati",
+      "Grey Goose",
+      "Guinness",
+      "Harley-Davidson",
+      "Indian Motorcycle",
+      "Jack Daniel's",
+      "Jeep",
+      "Marlboro",
+      "Monster Energy",
+      "Starbucks",
+      "The Famous Grouse",
+      "The Kraken",
+    ],
+  },
+  {
+    title: "Culture",
+    items: [
+      "Alpha Kappa Alpha",
+      "America",
+      "Bob Kevoian",
+      "Calvin and Hobbes",
+      "Captain Morgan",
+      "Father's Day",
+      "Independence Hall",
+      "Mother's Day",
+      "Peanuts",
+      "Route 66",
+      "Royal Navy",
+      "Smokey Bear",
+      "US Marine Corps",
+      "US Navy",
+      "USA",
+      "Veteran Day",
+    ],
+  },
+  { title: "K-Pop", items: ["Aespa", "BTS", "G-Dragon"] },
+  {
+    title: "Movie",
+    items: [
+      "Avatar",
+      "Batman",
+      "Dragon Ball",
+      "Godzilla",
+      "Harry Potter",
+      "James Bond 007",
+      "Marty Supreme",
+      "Naruto",
+      "One Piece",
+      "Peanut",
+      "Pokémon",
+      "Scream",
+      "Star Trek",
+      "Star Wars",
+      "Stranger Things",
+      "The Lord of the Rings",
+      "The Muppet Show",
+      "The Simpsons",
+      "Top Gun",
+      "Winnie the Pooh",
+      "Zootopia",
+    ],
+  },
+  {
+    title: "Music",
+    items: [
+      "Bruce Springsteen",
+      "Clint Black",
+      "Dolly Parton",
+      "Elvis Presley",
+      "Freddie Mercury",
+      "Jimmy Buffett",
+      "Kenny Chesney",
+      "Michael Jackson",
+      "Prince",
+      "Rock the Country",
+      "Westlife",
+      "Willie Nelson",
+    ],
+  },
+  {
+    title: "Other",
+    items: [
+      "Animals",
+      "Bad Omens",
+      "Charlie Puth",
+      "Chris Brown",
+      "DC",
+      "DMX",
+      "Doctor Who",
+      "Five Finger Death Punch",
+      "Foo Fighters",
+      "Friday The 13th",
+      "G.I. Joe",
+      "Game of Thrones",
+      "Gundam",
+      "House of the Dragon",
+      "Jujutsu Kaisen",
+      "Justin Bieber",
+      "La La Land",
+      "Magic The Gathering",
+      "Marvel",
+      "Mission Impossible",
+      "My Hero Academia",
+      "Noah Kahan",
+      "Pepe Aguilar",
+      "Phil Campbell",
+      "Pirates of the Caribbean",
+      "Predator",
+      "Rat Fink",
+      "Slash",
+      "Snoop Dogg",
+      "Taxi Driver",
+      "The Texas Chainsaw Massacre",
+    ],
+  },
+  {
+    title: "Rock Band",
+    items: [
+      "AC/DC",
+      "Aerosmith",
+      "Black Stone Cherry",
+      "Guns N' Roses",
+      "Iron Maiden",
+      "KISS",
+      "Led Zeppelin",
+      "Megadeth",
+      "Metallica",
+      "Pink Floyd",
+      "Queen",
+      "RUSH",
+      "Sleep Token",
+      "The Beatles",
+      "The Eagles",
+      "The Rolling Stones",
+      "Thirty Seconds to Mars",
+      "Van Halen",
+      "Wu-Tang Clan",
+    ],
+  },
+  {
+    title: "Sport",
+    items: ["MLB", "NBA", "NCAA", "NFL", "NHL", "Other Sport", "Soccer"],
+  },
+  { title: "Tabletop", items: ["Dungeons & Dragons"] },
+  { title: "Video Game", items: ["Fallout", "Sonic The Hedgehog", "World of Warcraft", "Zelda"] },
+];
+
 export default function Header() {
   const [q, setQ] = useState("");
   const [catOpen, setCatOpen] = useState(false);
@@ -99,209 +253,19 @@ export default function Header() {
           onMouseLeave={() => setBrandsOpen(false)}
         >
           <div className="mx-auto max-w-7xl px-6 py-6 text-sm text-slate-700">
-            <div className="mb-2">
-              <span className="font-semibold">ALL BRANDS</span>
-            </div>
+            {/* brands header removed; group titles are shown below */}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {/* Business */}
-              <div>
-                <div className="font-medium mb-1">Business</div>
-                <ul className="space-y-1 text-sm">
-                  <li>Budweiser</li>
-                  <li>Chevrolet</li>
-                  <li>Coca-Cola</li>
-                  <li>Ducati</li>
-                  <li>Grey Goose</li>
-                  <li>Guinness</li>
-                  <li>Harley-Davidson</li>
-                  <li>Indian Motorcycle</li>
-                  <li>Jack Daniel's</li>
-                  <li>Jeep</li>
-                  <li>Marlboro</li>
-                  <li>Monster Energy</li>
-                  <li>Starbucks</li>
-                  <li>The Famous Grouse</li>
-                  <li>The Kraken</li>
-                </ul>
-              </div>
-
-              {/* Culture */}
-              <div>
-                <div className="font-medium mb-1">Culture</div>
-                <ul className="space-y-1 text-sm">
-                  <li>Alpha Kappa Alpha</li>
-                  <li>America</li>
-                  <li>Bob Kevoian</li>
-                  <li>Calvin and Hobbes</li>
-                  <li>Captain Morgan</li>
-                  <li>Father's Day</li>
-                  <li>Independence Hall</li>
-                  <li>Mother's Day</li>
-                  <li>Peanuts</li>
-                  <li>Route 66</li>
-                  <li>Royal Navy</li>
-                  <li>Smokey Bear</li>
-                  <li>US Marine Corps</li>
-                  <li>US Navy</li>
-                  <li>USA</li>
-                  <li>Veteran Day</li>
-                </ul>
-              </div>
-
-              {/* K-Pop */}
-              <div>
-                <div className="font-medium mb-1">K-Pop</div>
-                <ul className="space-y-1 text-sm">
-                  <li>Aespa</li>
-                  <li>BTS</li>
-                  <li>G-Dragon</li>
-                </ul>
-              </div>
-
-              {/* Movie */}
-              <div>
-                <div className="font-medium mb-1">Movie</div>
-                <ul className="space-y-1 text-sm">
-                  <li>Avatar</li>
-                  <li>Batman</li>
-                  <li>Dragon Ball</li>
-                  <li>Godzilla</li>
-                  <li>Harry Potter</li>
-                  <li>James Bond 007</li>
-                  <li>Marty Supreme</li>
-                  <li>Naruto</li>
-                  <li>One Piece</li>
-                  <li>Peanut</li>
-                  <li>Pokémon</li>
-                  <li>Scream</li>
-                  <li>Star Trek</li>
-                  <li>Star Wars</li>
-                  <li>Stranger Things</li>
-                  <li>The Lord of the Rings</li>
-                  <li>The Muppet Show</li>
-                  <li>The Simpsons</li>
-                  <li>Top Gun</li>
-                  <li>Winnie the Pooh</li>
-                  <li>Zootopia</li>
-                </ul>
-              </div>
-
-              {/* Music */}
-              <div>
-                <div className="font-medium mb-1">Music</div>
-                <ul className="space-y-1 text-sm">
-                  <li>Bruce Springsteen</li>
-                  <li>Clint Black</li>
-                  <li>Dolly Parton</li>
-                  <li>Elvis Presley</li>
-                  <li>Freddie Mercury</li>
-                  <li>Jimmy Buffett</li>
-                  <li>Kenny Chesney</li>
-                  <li>Michael Jackson</li>
-                  <li>Prince</li>
-                  <li>Rock the Country</li>
-                  <li>Westlife</li>
-                  <li>Willie Nelson</li>
-                </ul>
-              </div>
-
-              {/* Other */}
-              <div>
-                <div className="font-medium mb-1">Other</div>
-                <ul className="space-y-1 text-sm">
-                  <li>Animals</li>
-                  <li>Bad Omens</li>
-                  <li>Charlie Puth</li>
-                  <li>Chris Brown</li>
-                  <li>DC</li>
-                  <li>DMX</li>
-                  <li>Doctor Who</li>
-                  <li>Five Finger Death Punch</li>
-                  <li>Foo Fighters</li>
-                  <li>Friday The 13th</li>
-                  <li>G.I. Joe</li>
-                  <li>Game of Thrones</li>
-                  <li>Gundam</li>
-                  <li>House of the Dragon</li>
-                  <li>Jujutsu Kaisen</li>
-                  <li>Justin Bieber</li>
-                  <li>La La Land</li>
-                  <li>Magic The Gathering</li>
-                  <li>Marvel</li>
-                  <li>Mission Impossible</li>
-                  <li>My Hero Academia</li>
-                  <li>Noah Kahan</li>
-                  <li>Pepe Aguilar</li>
-                  <li>Phil Campbell</li>
-                  <li>Pirates of the Caribbean</li>
-                  <li>Predator</li>
-                  <li>Rat Fink</li>
-                  <li>Slash</li>
-                  <li>Snoop Dogg</li>
-                  <li>Taxi Driver</li>
-                  <li>The Texas Chainsaw Massacre</li>
-                </ul>
-              </div>
-
-              {/* Rock Band */}
-              <div>
-                <div className="font-medium mb-1">Rock Band</div>
-                <ul className="space-y-1 text-sm">
-                  <li>AC/DC</li>
-                  <li>Aerosmith</li>
-                  <li>Black Stone Cherry</li>
-                  <li>Guns N' Roses</li>
-                  <li>Iron Maiden</li>
-                  <li>KISS</li>
-                  <li>Led Zeppelin</li>
-                  <li>Megadeth</li>
-                  <li>Metallica</li>
-                  <li>Pink Floyd</li>
-                  <li>Queen</li>
-                  <li>RUSH</li>
-                  <li>Sleep Token</li>
-                  <li>The Beatles</li>
-                  <li>The Eagles</li>
-                  <li>The Rolling Stones</li>
-                  <li>Thirty Seconds to Mars</li>
-                  <li>Van Halen</li>
-                  <li>Wu-Tang Clan</li>
-                </ul>
-              </div>
-
-              {/* Sport */}
-              <div>
-                <div className="font-medium mb-1">Sport</div>
-                <ul className="space-y-1 text-sm">
-                  <li>MLB</li>
-                  <li>NBA</li>
-                  <li>NCAA</li>
-                  <li>NFL</li>
-                  <li>NHL</li>
-                  <li>Other Sport</li>
-                  <li>Soccer</li>
-                </ul>
-              </div>
-
-              {/* Tabletop */}
-              <div>
-                <div className="font-medium mb-1">Tabletop</div>
-                <ul className="space-y-1 text-sm">
-                  <li>Dungeons &amp; Dragons</li>
-                </ul>
-              </div>
-
-              {/* Video Game */}
-              <div>
-                <div className="font-medium mb-1">Video Game</div>
-                <ul className="space-y-1 text-sm">
-                  <li>Fallout</li>
-                  <li>Sonic The Hedgehog</li>
-                  <li>World of Warcraft</li>
-                  <li>Zelda</li>
-                </ul>
-              </div>
+              {BRANDS.map((group) => (
+                <div key={group.title}>
+                  <div className="font-semibold text-md mb-1">{group.title}</div>
+                  <ul className="space-y-1 text-sm">
+                    {group.items.map((it) => (
+                      <li key={it}>{it}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
 
             <div className="mt-4">
