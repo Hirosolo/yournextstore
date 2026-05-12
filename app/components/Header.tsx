@@ -20,7 +20,18 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex justify-center gap-4 items-center text-sm text-slate-700">
-          <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors" href="#category">Category</a>
+          <div className="relative group">
+            <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors cursor-pointer" href="#category">Category</a>
+
+            <div className="absolute left-0 top-full mt-2 w-48 bg-white border border-slate-100 shadow-md rounded-md py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+              <a className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="#accessories">Accessories</a>
+              <a className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="#clothing">Clothing</a>
+              <a className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="#footwear">Footwear</a>
+              <a className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="#homedecor">Home Decor</a>
+              <a className="block px-4 py-2 text-sm text-red-600 font-medium hover:bg-slate-100" href="#sale">Sale</a>
+            </div>
+          </div>
+
           <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors" href="#brands">Brands</a>
           <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors" href="#about">About Us</a>
           <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors" href="#contact">Contact Us</a>
