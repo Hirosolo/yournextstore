@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import MegaPopup from "./MegaPopup";
 
@@ -169,8 +170,11 @@ export default function Header() {
   const [q, setQ] = useState("");
   const [catOpen, setCatOpen] = useState(false);
   const [brandsOpen, setBrandsOpen] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const brandsCloseTimeout = useRef<number | null>(null);
   const catCloseTimeout = useRef<number | null>(null);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
 
   function clearBrandsCloseTimeout() {
     if (brandsCloseTimeout.current) {
@@ -214,7 +218,36 @@ export default function Header() {
   }
 
   useEffect(() => {
+    lastScrollY.current = window.scrollY;
+
+    function updateHeaderVisibility() {
+      const currentScrollY = window.scrollY;
+      const scrollingUp = currentScrollY < lastScrollY.current;
+      const nearTop = currentScrollY < 12;
+
+      if (nearTop || scrollingUp) {
+        setIsHeaderVisible(true);
+      } else if (currentScrollY > lastScrollY.current + 8) {
+        setIsHeaderVisible(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+      ticking.current = false;
+    }
+
+    function onScroll() {
+      if (ticking.current) {
+        return;
+      }
+
+      ticking.current = true;
+      window.requestAnimationFrame(updateHeaderVisibility);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => {
+      window.removeEventListener("scroll", onScroll);
       clearBrandsCloseTimeout();
       clearCatCloseTimeout();
     };
@@ -227,10 +260,12 @@ export default function Header() {
   }
 
   return (
-    <header className="relative sticky top-0 z-10 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-6 py-6 grid grid-cols-3 items-center">
+    <header
+      className={`sticky top-0 z-30 transform-gpu overflow-hidden backdrop-blur-md transition-transform duration-300 ease-in-out will-change-transform ${isHeaderVisible ? "translate-y-0 shadow-[0_10px_30px_rgba(15,23,42,0.08)]" : "-translate-y-[110%] shadow-none pointer-events-none"}`}
+    >
+      <div className="mx-auto max-w-7xl px-6 py-6 grid grid-cols-3 items-center bg-white/90">
         <div className="flex items-center gap-3">
-          <a href="/" className="font-semibold font-bold text-xl">Your Next Store</a>
+          <Link href="/" className="font-semibold font-bold text-xl">Your Next Store</Link>
         </div>
 
         <nav className="hidden md:flex justify-center gap-4 items-center text-sm text-slate-700">
