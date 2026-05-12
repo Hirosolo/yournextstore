@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function Header() {
   const [q, setQ] = useState("");
+  const [catOpen, setCatOpen] = useState(false);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -13,23 +14,22 @@ export default function Header() {
   }
 
   return (
-    <header className=" sticky top-0 z-10 backdrop-blur-md">
+    <header className="relative sticky top-0 z-10 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-6 py-6 grid grid-cols-3 items-center">
         <div className="flex items-center gap-3">
           <span className="font-semibold font-bold text-xl">Your Next Store</span>
         </div>
 
         <nav className="hidden md:flex justify-center gap-4 items-center text-sm text-slate-700">
-          <div className="relative group">
-            <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors cursor-pointer" href="#category">Category</a>
-
-            <div className="absolute left-0 top-full mt-2 w-48 bg-white border border-slate-100 shadow-md rounded-md py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
-              <a className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="#accessories">Accessories</a>
-              <a className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="#clothing">Clothing</a>
-              <a className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="#footwear">Footwear</a>
-              <a className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100" href="#homedecor">Home Decor</a>
-              <a className="block px-4 py-2 text-sm text-red-600 font-medium hover:bg-slate-100" href="#sale">Sale</a>
-            </div>
+          <div>
+            <a
+              className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"
+              href="#category"
+              onMouseEnter={() => setCatOpen(true)}
+              onMouseLeave={() => setCatOpen(false)}
+            >
+              Category
+            </a>
           </div>
 
           <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors" href="#brands">Brands</a>
@@ -58,6 +58,30 @@ export default function Header() {
           </form>
         </div>
       </div>
+        {/* Full-width category popup (positioned relative to header) */}
+        <div
+          className={`absolute left-0 right-0 top-full bg-white border-t border-slate-100 shadow-md z-50 transition-all duration-150 ${catOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'}`}
+          onMouseEnter={() => setCatOpen(true)}
+          onMouseLeave={() => setCatOpen(false)}
+        >
+          <div className="mx-auto max-w-7xl px-6 py-4 text-sm text-slate-700">
+            <div className="mb-2">
+              <span className="font-semibold">ALL CATEGORIES</span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-2">
+              <a className="block hover:underline" href="#accessories">Accessories</a>
+              <a className="block hover:underline" href="#clothing">Clothing</a>
+              <a className="block hover:underline" href="#footwear">Footwear</a>
+              <a className="block hover:underline" href="#homedecor">Home Decor</a>
+              <a className="block hover:underline" href="#sale">Sale</a>
+            </div>
+
+            <div className="mt-3">
+              <a href="/categories" className="inline-block font-semibold text-sm hover:underline">View all Categories</a>
+            </div>
+          </div>
+        </div>
     </header>
   );
 }
