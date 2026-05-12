@@ -25,6 +25,46 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@layer utilities {
+  @keyframes favorite-pop {
+    0% {
+      transform: scale(1);
+    }
+
+    35% {
+      transform: scale(1.18);
+    }
+
+    70% {
+      transform: scale(0.96);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes favorite-burst {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.65;
+    }
+
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  .animate-favorite-pop {
+    animation: favorite-pop 480ms ease-out;
+  }
+
+  .animate-favorite-burst {
+    animation: favorite-burst 480ms ease-out;
+  }
+}
+
 /* Landing tweaks */
 .rounded-lg {
   border-radius: 0.5rem;

@@ -5,6 +5,7 @@ type Product = {
   title: string;
   price: string;
   img: string;
+  href?: string;
 };
 
 type FeaturedProductsSectionProps = {
@@ -39,7 +40,14 @@ export default function FeaturedProductsSection({ products }: FeaturedProductsSe
 
       <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {products.map((product) => (
-          <ProductCard key={product.id} title={product.title} price={product.price} img={product.img} />
+          <ProductCard 
+            key={product.id} 
+            title={product.title} 
+            price={product.price} 
+            img={product.img}
+            href={product.href}
+            productId={product.id.toString()}
+          />
         ))}
       </div>
     </section>

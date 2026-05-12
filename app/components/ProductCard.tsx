@@ -1,22 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { HeartButton } from "./HeartButton";
 
 type ProductCardProps = {
   title: string;
   price: string;
   img: string;
   href?: string;
+  productId?: string;
 };
 
-export default function ProductCard({ title, price, img, href }: ProductCardProps) {
+export default function ProductCard({ title, price, img, href, productId }: ProductCardProps) {
   const cardContent = (
     <>
-
-      <button aria-label="favorite" className="absolute right-4 top-4 text-slate-400 hover:text-red-500">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z" />
-        </svg>
-      </button>
+      {productId && <HeartButton productId={productId} productTitle={title} />}
 
       <div className="relative aspect-[4/5] w-full">
         <Image src={img} alt={title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 25vw" />

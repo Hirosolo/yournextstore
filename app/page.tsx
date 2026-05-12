@@ -1,4 +1,5 @@
 
+
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import FeaturedProductsSection from "./components/FeaturedProductsSection";
@@ -11,24 +12,28 @@ const products = [
     title: "Everyday Tote",
     price: "$49",
     img: "/Default_product_image_of_a_bag_for_ecommerce_website_12028129-BHMR9OOrV50zy2Wg0XeiKWDIKdVTNB.jpg",
+    href: "/bags/totes/1",
   },
   {
     id: 2,
     title: "Classic Bottle",
     price: "$24",
     img: "/Default_product_image_of_a_bottle_for_ecommerce_website_minim_2-GOjCmiuwEPPLwzFxtjnHCNSJ7Zy5Ut.jpg",
+    href: "/bottles/drinkware/2",
   },
   {
     id: 3,
     title: "Soft Tee",
     price: "$29",
     img: "/Default_product_image_of_a_tshirt_for_ecommerce_website_minim_32028129-JHMZe8xJ28tll9bGQINl0AXFfYByFc.jpg",
+    href: "/apparel/tees/3",
   },
   {
     id: 4,
     title: "Limited Cap",
     price: "$19",
     img: "/Default_product_imag_of_a_yellow_bag_for_ecommerce_website_1-3dgyNymA8r5pCl7OG4nEirKWxLjj3Y.jpg",
+    href: "/apparel/caps/4",
   },
 ];
 

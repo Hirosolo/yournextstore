@@ -261,7 +261,7 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-30 transform-gpu overflow-hidden backdrop-blur-md transition-transform duration-300 ease-in-out will-change-transform ${isHeaderVisible ? "translate-y-0 shadow-[0_10px_30px_rgba(15,23,42,0.08)]" : "-translate-y-[110%] shadow-none pointer-events-none"}`}
+      className={`sticky top-0 z-30 transform-gpu backdrop-blur-md transition-transform duration-300 ease-in-out will-change-transform ${isHeaderVisible ? "translate-y-0 shadow-[0_10px_30px_rgba(15,23,42,0.08)]" : "-translate-y-[110%] shadow-none pointer-events-none"}`}
     >
       <div className="mx-auto max-w-7xl px-6 py-6 grid grid-cols-3 items-center bg-white/90">
         <div className="flex items-center gap-3">
@@ -269,7 +269,7 @@ export default function Header() {
         </div>
 
         <nav className="hidden md:flex justify-center gap-4 items-center text-sm text-slate-700">
-          <div>
+          <div className="relative">
             <a
               className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"
               href="#category"
@@ -278,9 +278,16 @@ export default function Header() {
             >
               Category
             </a>
+            <MegaPopup
+              open={catOpen}
+              onMouseEnter={() => openCategories()}
+              onMouseLeave={() => scheduleCloseCategories()}
+              groups={[{ title: "ALL CATEGORIES", items: CATEGORIES }]}
+              viewAllPath="/categories"
+            />
           </div>
 
-          <div>
+          <div className="relative">
             <a
               className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors cursor-pointer"
               href="#brands"
@@ -289,6 +296,13 @@ export default function Header() {
             >
               Brands
             </a>
+            <MegaPopup
+              open={brandsOpen}
+              onMouseEnter={() => openBrands()}
+              onMouseLeave={() => scheduleCloseBrands()}
+              groups={BRANDS.map((g) => ({ title: g.title, items: g.items }))}
+              viewAllPath="/brands"
+            />
           </div>
           <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors" href="#about">About Us</a>
           <a className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors" href="#contact">Contact Us</a>
@@ -315,20 +329,6 @@ export default function Header() {
           </form>
         </div>
       </div>
-        <MegaPopup
-          open={catOpen}
-          onMouseEnter={() => openCategories()}
-          onMouseLeave={() => scheduleCloseCategories()}
-          groups={[{ title: "ALL CATEGORIES", items: CATEGORIES }]}
-          viewAllPath="/categories"
-        />
-        <MegaPopup
-          open={brandsOpen}
-          onMouseEnter={() => openBrands()}
-          onMouseLeave={() => scheduleCloseBrands()}
-          groups={BRANDS.map((g) => ({ title: g.title, items: g.items }))}
-          viewAllPath="/brands"
-        />
     </header>
   );
 }

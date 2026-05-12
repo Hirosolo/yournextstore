@@ -29,7 +29,7 @@ export default function MegaPopup({
 
   return (
     <div
-      className={`absolute left-0 right-0 top-full z-50 max-h-[60vh] overflow-y-auto border-t border-slate-100 bg-white shadow-md transform-gpu origin-top transition-all duration-200 ease-out ${open ? "pointer-events-auto opacity-100 translate-y-0 scale-100" : "pointer-events-none opacity-0 -translate-y-2 scale-[0.98]"}`}
+      className={`fixed left-0 right-0 top-[72px] z-50 max-h-[60vh] overflow-y-auto border-t border-slate-100 bg-white shadow-md transform-gpu origin-top transition-all duration-200 ease-out ${open ? "pointer-events-auto opacity-100 translate-y-0 scale-100" : "pointer-events-none opacity-0 -translate-y-2 scale-[0.98]"}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

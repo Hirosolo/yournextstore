@@ -1,4 +1,5 @@
 import Header from "../../../components/Header";
+import FavoriteButton from "../../../components/FavoriteButton";
 import PageFooter from "../../../components/PageFooter";
 import ProductImageGallery from "../../../components/ProductImageGallery";
 
@@ -21,6 +22,7 @@ const getProductData = (productId: string) => {
     brand: "Cognac Co.",
     rating: 4.5,
     reviews: 128,
+    quantity: 8,
     mainImage:
       "/68747470733a2f2f66696c65732e7374726970652e636f6d2f6c696e6b732f4d44423859574e6a644638785433426165473547536d4e57625668366255527366475a735833526c63335266546a597a636b645a61474a7a5a6c566c57466c6f62324578656d51775155683.avif",
     thumbnails: [
@@ -30,21 +32,30 @@ const getProductData = (productId: string) => {
     ],
     description:
       "Elegantly crafted leather tote bag perfect for everyday use. Features premium Italian leather, spacious interior compartments, and durable handles.",
-    details: [
-      "Material: 100% Premium Leather",
-      "Dimensions: 14\" x 12\" x 6\"",
-      "Weight: 2.1 lbs",
-      "Color: Cognac Brown",
-      "Compartments: 2 main sections, 4 interior pockets",
+    paymentMethods: [
+      { name: "Visa", image: "/payment/visa.png" },
+      { name: "Mastercard", image: "/payment/mastercard.png" },
+      { name: "American Express", image: "/payment/americanexpress.png" },
+      { name: "Discover", image: "/payment/discover.png" },
+      { name: "PayPal", image: "/payment/paypal.png" },
+      { name: "Apple Pay", image: "/payment/applepay.png" },
+      { name: "Google Pay", image: "/payment/ggpay.png" },
+      { name: "Afterpay", image: "/payment/afterpay.png" },
     ],
-    inStock: true,
-    quantity: 15,
+    tags: ["Drinkware", "Batman"],
   };
 };
 
 export default async function ProductPage({ params }: Props) {
   const { group, slug, productId } = await params;
   const product = getProductData(productId);
+  const priceNum = parseFloat(String(product.price).replace(/[^0-9.]/g, "")) || 0;
+  const originalPriceNum =
+    parseFloat(String(product.originalPrice).replace(/[^0-9.]/g, "")) || 0;
+  const isOnSale = originalPriceNum > priceNum && priceNum > 0;
+  const discount = isOnSale
+    ? Math.round(((originalPriceNum - priceNum) / originalPriceNum) * 100)
+    : 0;
   const breadcrumb = `${group.toUpperCase()} / ${slug.toUpperCase()} / ${product.title}`;
 
   return (
@@ -69,10 +80,14 @@ export default async function ProductPage({ params }: Props) {
           {/* Right Column - Product Details */}
           <div className="flex flex-col gap-6">
             {/* Product Title */}
-            <div>
+            <div className="flex items-start justify-between gap-4">
               <h1 className="text-3xl font-bold text-slate-900">
                 {product.title}
               </h1>
+              <FavoriteButton
+                productId={product.id}
+                productTitle={product.title}
+              />
             </div>
 
             {/* Category/Brand (left) and Rating (right) */}
@@ -91,9 +106,9 @@ export default async function ProductPage({ params }: Props) {
                       width="16"
                       height="16"
                       viewBox="0 0 24 24"
-                      fill={i < Math.floor(product.rating) ? "#D6C19A" : "#d1d5db"}
+                      fill={i < Math.floor(product.rating) ? "#FBBF24" : "#d1d5db"}
                       stroke="currentColor"
-                      strokeWidth="1"
+                      strokeWidth="0"
                     >
                       <polygon points="12 2 15.09 10.26 24 10.27 17.18 16.70 20.27 24.96 12 18.53 3.73 24.96 6.82 16.70 0 10.27 8.91 10.26 12 2" />
                     </svg>
@@ -106,42 +121,37 @@ export default async function ProductPage({ params }: Props) {
             </div>
 
             {/* Pricing */}
-            <div className="flex items-baseline gap-3">
-              <span className="text-3xl font-bold text-slate-900">
-                {product.price}
-              </span>
-              <span className="text-lg text-slate-500 line-through">
-                {product.originalPrice}
-              </span>
+            <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-4">
+              <div className="flex items-baseline gap-4">
+                {isOnSale ? (
+                  <>
+                    <span className="text-4xl font-extrabold text-red-600">
+                      {product.price}
+                    </span>
+                    <span className="text-lg text-slate-500 line-through">
+                      {product.originalPrice}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-3xl font-bold text-slate-900">
+                    {product.price}
+                  </span>
+                )}
+              </div>
+
+              {isOnSale && (
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-2 bg-red-50 text-red-600 px-3 py-1 text-sm font-semibold rounded-full">
+                    {discount}% OFF
+                  </span>
+                </div>
+              )}
             </div>
 
-            {/* Description */}
+            {/* Short Description */}
             <p className="text-slate-700 leading-relaxed">
               {product.description}
             </p>
-
-            {/* Product Details */}
-            <div className="space-y-2 py-6 border-t border-b">
-              {product.details.map((detail, idx) => (
-                <p key={idx} className="text-sm text-slate-700">
-                  {detail}
-                </p>
-              ))}
-            </div>
-
-            {/* Stock Status */}
-            <div className="flex items-center gap-2">
-              <div
-                className={`w-3 h-3 rounded-full ${
-                  product.inStock ? "bg-green-500" : "bg-red-500"
-                }`}
-              />
-              <span className="text-sm font-medium text-slate-700">
-                {product.inStock
-                  ? `In Stock (${product.quantity} available)`
-                  : "Out of Stock"}
-              </span>
-            </div>
 
             {/* Quantity Selector */}
             <div className="flex items-center gap-4">
@@ -165,33 +175,44 @@ export default async function ProductPage({ params }: Props) {
 
             {/* Add to Cart Button */}
             <button className="w-full bg-slate-900 text-white py-3 rounded-lg font-semibold hover:bg-slate-800 transition-colors">
-              Add to Cart
+              CHOOSE OPTIONS & BUY NOW
             </button>
 
-            {/* Wishlist Button */}
-            <button className="w-full border-2 border-slate-900 text-slate-900 py-3 rounded-lg font-semibold hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z" />
-              </svg>
-              Add to Wishlist
-            </button>
-
-            {/* Additional Info */}
-            <div className="mt-6 space-y-3 text-sm text-slate-600">
-              <p>✓ Free shipping on orders over $100</p>
-              <p>✓ 30-day money-back guarantee</p>
-              <p>✓ Genuine product warranty</p>
+            {/* Accepted Payment Methods */}
+            <div className="border-t border-slate-200 pt-6">
+              <h3 className="text-sm font-semibold text-slate-900 mb-4">We accept:</h3>
+              <div className="flex flex-wrap gap-3">
+                {product.paymentMethods.map((method, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-center p-2 border border-slate-200 rounded-lg bg-white hover:bg-slate-50 transition-colors"
+                    title={method.name}
+                  >
+                    <img
+                      src={method.image}
+                      alt={method.name}
+                      className="h-8 w-auto"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Product Tags */}
+            <div className="border-t border-slate-200 pt-6">
+              <h3 className="text-sm font-semibold text-slate-900 mb-4">Tags:</h3>
+              <div className="flex flex-wrap gap-2">
+                {product.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium hover:bg-slate-200 transition-colors cursor-pointer"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
       </main>

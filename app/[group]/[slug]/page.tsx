@@ -35,6 +35,7 @@ export default async function Page({ params }: Props) {
               price={p.price}
               img={p.img}
               href={`/${group}/${slug}/${p.id}`}
+              productId={p.id.toString()}
             />
           ))}
         </section>
