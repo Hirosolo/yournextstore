@@ -29,7 +29,13 @@ export default async function Page({ params }: Props) {
 
         <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {sampleProducts.map((p) => (
-            <ProductCard key={p.id} title={p.title} price={p.price} img={p.img} />
+            <ProductCard
+              key={p.id}
+              title={p.title}
+              price={p.price}
+              img={p.img}
+              href={`/${group}/${slug}/${p.id}`}
+            />
           ))}
         </section>
       </main>
