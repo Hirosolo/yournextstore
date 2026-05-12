@@ -56,8 +56,8 @@ export default function MegaPopup({
         </div>
 
         {viewAllPath && (
-          <div className="mt-4">
-            <Link href={viewAllPath} className="inline-block font-semibold text-sm hover:underline">
+          <div className="mt-6 border-t border-slate-100 pt-4">
+            <Link href={viewAllPath} className="block font-semibold text-sm hover:underline">
               View all
             </Link>
           </div>
