@@ -120,7 +120,7 @@ export function HeartButton({ productId }: HeartButtonProps) {
       <button
         aria-label="favorite"
         onClick={handleClick}
-        className={`absolute right-4 top-4 z-10 relative transition-colors duration-300 ${
+        className={`absolute right-4 top-4 z-10 transition-colors duration-300 ${
           isAnimating ? "heart-animate" : ""
         } ${isFavorite ? "text-red-500" : "text-slate-400 hover:text-red-500"}`}
       >
